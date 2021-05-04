@@ -19,7 +19,11 @@ RCT_EXPORT_MODULE()
 
 RCT_EXPORT_METHOD(requestReview)
 {
-  [SKStoreReviewController requestReview];
+  if (@available(iOS 14.0, *)) {
+      [SKStoreReviewController requestReviewInScene:[UIApplication sharedApplication].delegate.window.windowScene];
+  } else if (@available(iOS 10.3, *)) {
+      [SKStoreReviewController requestReview];
+  }
 }
 
 + (BOOL)requiresMainQueueSetup
